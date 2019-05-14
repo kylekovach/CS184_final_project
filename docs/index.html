@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<!--
+	Aesthetic by gettemplates.co
+	Twitter: http://twitter.com/gettemplateco
+	URL: http://gettemplates.co
+-->
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CS184 Final Project</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by gettemplates.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" content="gettemplates.co" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet"> -->
+
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Themify Icons-->
+	<link rel="stylesheet" href="css/themify-icons.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		
+	<div class="gtco-loader"></div>
+	
+	<div id="page">
+
+		<!-- <nav class="gtco-nav" role="navigation">
+			<div class="container">
+				
+				<div class="row">
+					<div class="col-sm-2 col-xs-2">
+						<div id="gtco-logo"><a href="index.html">Motion<sup>&trade;</sup></div>
+					</div>
+					<div class="col-xs-10 text-right fh5co-top-social">
+						<ul class="gtco-social">
+							<li><a href="#" class="icon-twitter"></i></a></li>
+							<li><a href="#" class="icon-dribbble"></i></a></li>
+							<li><a href="#" class="icon-instagram"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</nav> -->
+		
+		<!-- <div id="gtco-intro">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 text-center">
+						<div class="dt js-height">
+							<div class="dtc animate-box">
+								<h2 class="gradient-text">Physically Based Heating of Metals</h2>
+								<h2 class="gradient-text">Sean Houlihan, Kyle Kovach, and Rishi Upadhyay</h2>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<div id="gtco-project">
+			<div id="gtco-intro">
+				<div class="container">
+						<div class="row">
+							<div class="col-md-10 col-md-offset-1 text-center">
+								<div class="dt js-height">
+									<div class="dtc animate-box">
+										<h2 class="gradient-text">Physically Based Heating of Metals</h2>
+										<h2 class="gradient-text">Sean Houlihan, Kyle Kovach, and Rishi Upadhyay</h2>
+									</div>	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col-md-7">
+						<h3>Abstract</h3>
+						<p class="desc">    The goal of our project was to simulate the spreading of heat through a metal block as parts of it are exposed to high temperatures in real time. We emulate this by implementing real, physical heat transfer equations in our code, which allow for each static particle to transfer its heat to neighboring particles, resulting in a change in temperature. This change in temperature was represented by the changing color of the material, transitioning from the default grey, to red, to orange, to yellow, and finally to white: the same color gamut a real metal goes through as it heats up. Since the appearance of our simulation mimics that of a real heated metal, and does so in real time, it could be used in real-time applications like video games, virtual reality, or augmented reality. 
+						</p>
+					</div>
+				</div>
+				<div class="row row-pb-md">
+					<div class="col-md-7">
+						<h3>Technical Approach</h3>
+						<p class="desc">
+								At a high-level, our technical approach to this problem was to simulate the heating with a particle-based simulation. All of our code was implemented using OpenGL and C++. OpenGL was used mainly for creating a GUI window, and for the low-level implementation details such as passing vertices and colors to the shaders which then drew our images. C++ was used to create and maintain all the virtual particles. While starting this project, we were unable to find any previous work in this area and therefore all the implementation decisions were made from scratch ourselves. One of the main goals of our project was for our implementation to run in real-time, and therefore we chose to make all our particles are static. This does reduce the accuracy of our simulation slightly, but we chose to make this trade-off in order to avoid the extra calculations that would slow down our simulation too much.
+						</p>
+						<p class="desc">
+								In order to implement the particle-based simulation, we first import a mesh .obj from Blender into OpenGL. We then go through the vertices of the mesh and create a large number of virtual particles, all spaced-evenly apart, based on the mesh geometry. When the particles are first created, they are initialized at a preset temperature. After this 3D grid of particles has been created, we map every vertex to its nearby particles. In order to do this, per vertex, we iterate through all particles and find the closest one. After we have found the distance to the closest particle, we iterate through all the particles again, this time looking for any particle within 3% of the distance to the closest particle. Therefore, any particle that is between 0.97x and 1.03x the closest distance is now mapped to that vertex. After all the vertices have been associated with nearby particles, we can move onto the simulation portion. 
+
+						</p>
+						<p class="desc">
+								In order to fully simulate heating, we had to implement two types of heat transfer: radiation and conduction. The first type, radiation, was used to heat the mesh from an external heat source. The equation used to model this is as follows: 
+
+							</p>
+							<img src="images/eq1.png" style="max-width:40%; height:auto;">
+							<p></p>
+							<p class="desc">
+									Here q is the amount of energy transferred,  is the Stefan-Boltzmann constant which is equal to 5.67 x 10-8, F is the percentage of the area that is visible from the heat source, A is the surface area of the object, and Theat and Tobject are the temperatures of the heat source and object respectively. Using this equation, we were able to model the black-body radiation and “add” energy to our system. This equation allowed us to heat up a portion of the mesh and increase the energy of the object.
+
+								</p>
+								<p class="desc">
+										The next type of the heat transfer we implemented was conduction, or the heat transfer through the object. In order to do that, we used the following equation: 
+									</p>
+									<img src="images/eq2.png" style="max-width:20%; height:auto;">
+									<p></p>
+									<p class="desc">
+											In this equation, q is the amount of energy transferred, k is the thermal conductivity of the metal we are modeling, and Tis the difference in temperature between the particles in question. Using this equation, we can model the heat transfer between particles, and the spread of heat within the object.
+
+										</p>
+										<p class="desc">
+												Finally, the last equation implemented was:
+
+											</p>
+											<img src="images/eq3.png" style="max-width:20%; height:auto;">
+											<p></p>
+											<p class="desc">
+													This equation is used to calculate how much a particles temperature changes based on how much energy it gains or loses. The qis the energy gained or lost, m is the mass of the particle, c is the specific heat of the metal we are modeling, and Tis the change in temperature. 
+
+												</p>
+												<p class="desc">
+														With all three of these equations, we can fully model the heating of a metal. The radiation equation allows us to “add” energy to the object from an external source, the conduction equations allows us to spread this energy throughout the object, and the specific heat formula allows us to calculate how the temperature of the particles change based on the energy they gain or lose. In order to “add” energy, we chose a section of the object that we wanted to heat up and applied the radiation equation appropriately. We then simulated heat transfer by iterating through every particle and using the conduction equation on all its neighbors once per timestep. Finally, we used the specific heat equation on each particle to calculate its current temperature.
+
+													</p>
+													<p class="desc">
+															The final step to the simulation was to color the vertices of the mesh appropriately based on the temperature of its nearby particles. In order to do this, first each virtual particle is assigned a color based on its current temperature. Since metals have different colors at various temperatures, we used a mapping from temperature to color to find the appropriate color and then added linear interpolation with nearby colors to create a smooth look. This color is based on how metals change color in real life as they heat up. After the particles have been assigned a color, we use the mapping created earlier between particles and vertices to compute the color of all vertices.
+
+														</p>
+														<p class="desc">
+																This is done using a weighted average based on the inverse of the particles distance from the vertex. In this way, closer particles are weighted more while further particles get less emphasis. The colors for all vertices were then passed to OpenGL as a buffer for the shaders to render.
+
+															</p>
+															<p class="desc">
+																	Many of the issues we ran into throughout this project were a result of running operations on thousands and thousands of virtual particles. While working on the coloration of particles, we often ended up seeing colors that were nowhere in our code. In addition, we ran into various small bugs in our heat transfer equations that would result in the simulation running fine except for a few edge cases. The greatest challenge of these bugs was that because we had 50,000+ particles in some meshes, we could not use print statements to debug easily. As a result, we were forced to think about our implementation and consider what kind of bugs could result in the issues we were seeing. Visual debugging in this sense also helped us think about our implementation details and find other potential issues. Finally, an interesting issue we ran into was that early simulations would often be non-deterministic for no reason our group could pinpoint. This bug took us quite a while to figure out, as it was due to the dynamic memory management of our program, something our group was not very familiar with prior to this project.
+
+																</p>
+																<p class="desc">
+																		Overall, this project was a great learning experience for our group. We were able to learn a new framework (OpenGL), how to implement a static particle-based simulation, and a lot of new visual debugging skills.  In particular, we learned how to set up a new OpenGL project from scratch and how to interact with it programmatically to create a realistic, physically based simulation.
+
+																	</p>
+
+					</div>
+				</div>
+				<div class="row row-pb-md">
+					<div class="col-md-7">
+						<h3>Results</h3>
+						
+					</div>
+				</div>
+				<div class="row row-pb-md">
+					<div class="col-md-4 col-sm-4 col-xs-6 fh5co-project animate-box">
+						<a><img src="images/cool.gif" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+							<h3 style="-webkit-text-stroke: 1px black; font-weight: bold;">Heated Front and Back</h3>
+						</a>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-6 fh5co-project animate-box">
+						<a><img src="images/corner.gif" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+							<h3 style="-webkit-text-stroke: 1px black; font-weight: bold;">Heated Corner</h3>
+						</a>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-6 fh5co-project animate-box">
+						<a><img src="images/demo.gif" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+							<h3 style="-webkit-text-stroke: 1px black; font-weight: bold;">Heated Top</h3>
+						</a>
+					</div>
+					
+					
+				</div>
+				<div class="row row-pb-md">
+					<div class="col-md-7">
+						<h3>Contributions From Each Team Member</h3>
+						<p class="desc">
+							Sean Houlihan: Figured out how to format and import .obj files from Blender into OpenGL, implemented the dynamic creation of static particles based on the .obj file, ironed out bugs in the mapping of vertices to particles, figured out how to populate position and color buffer data in OpenGL, and played a key role in discovering fixes for some of our most stubborn dynamic memory issues. 
+						</p>
+						<p class="desc">
+								Kyle Kovach: Implemented mapping from vertex to nearest particles. Empirically figured out best (most visually pleasing) threshold percent to use. Implemented the distance-based interpolation of the particles’ colors for a given vertex. 
+						</p>
+						<p class="desc">
+								Rishi Upadhyay: Created the particle struct, implemented the radiation and conduction heat transfer equations along with the specific heat formula, figured out how to heat a specific portion of the object, implemented the code to find nearby particles and calculate the heat transfer between them, and figured out how to convert the temperature of particles to a color.
+						</p>
+					</div>
+				</div>
+				<iframe width="966" height="604" src="https://www.youtube.com/embed/crsAzX_BCjw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
+		</div>
+	
+
+		
+		
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+
+	<!-- Main -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+
